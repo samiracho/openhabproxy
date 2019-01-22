@@ -1,0 +1,49 @@
+server {
+
+    root ${SITE_PATH}/public_html;
+    index index.php;
+
+    server_name ${SERVER_NAME};
+
+    location / {
+        proxy_pass https://${PROXY_SERVER}:${PROXY_PORT};
+        proxy_set_header Host ${PROXY_SERVER};
+        proxy_set_header Referer ${PROXY_SERVER};
+
+        proxy_set_header User-Agent $http_user_agent;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header Accept-Encoding "";
+        proxy_set_header Accept-Language $http_accept_language;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        #sub_filter ${PROXY_SERVER} ${SERVER_NAME};
+        #sub_filter_once off;
+    }
+
+
+    location /api {
+      auth_basic           "Administrator's Area";
+      auth_basic_user_file ${SITE_PATH}/app/.htpasswd;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+    }
+
+    listen [::]:443 ssl ipv6only=on; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/${SERVER_NAME}/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/${SERVER_NAME}/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+server {
+    listen 80;
+    server_name ${SERVER_NAME};
+
+    # redirects both www and non-www to https
+    return 301 https://${SERVER_NAME}$request_uri;
+}

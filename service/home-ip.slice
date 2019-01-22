@@ -1,0 +1,10 @@
+# /etc/systemd/system/home-ip.slice
+
+[Unit]
+Description=Limited resources Slice
+DefaultDependencies=no
+Before=slices.target
+
+[Slice]
+CPUQuota=10%
+MemoryLimit=0.1G

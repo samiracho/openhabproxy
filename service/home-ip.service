@@ -1,0 +1,12 @@
+# /etc/systemd/system/home-ip.service
+
+[Unit]
+Description=Updates nginx reverse proxy with latest home ip
+Wants=home-ip.timer
+
+[Service]
+ExecStart=/opt/openhabproxy/app/updnginx.sh
+Slice=home-ip.slice
+
+[Install]
+WantedBy=multi-user.target

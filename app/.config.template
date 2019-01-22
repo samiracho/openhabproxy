@@ -1,0 +1,5 @@
+SERVER_NAME="yourdomain.com"
+SITE_PATH="/var/www/openhabproxy"
+PROXY_PORT="8080"
+SITES_AVAILABLE_DIR="/etc/nginx/sites-available"
+SITES_ENABLED_DIR="/etc/nginx/sites-enabled"

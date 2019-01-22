@@ -1,0 +1,14 @@
+# /etc/systemd/system/home-ip.timer
+
+[Unit]
+Description=Run home-ip every 5-10 minutes
+Requires=home-ip.service
+
+[Timer]
+Unit=home-ip.service
+OnUnitInactiveSec=5m
+RandomizedDelaySec=5m
+AccuracySec=1s
+
+[Install]
+WantedBy=timers.target
