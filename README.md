@@ -2,7 +2,7 @@
 
 Little app to be able to access to my home Openhab server from the Internet without using a ddns service. I use my webserver hosted at Digitalocean as reverse proxy. When my dynamic IP at home changes, the reverse-proxy gets updated.
 
-In my openhab server I've setup a cronjob that calls to yourdomain.com/api/setip.php in order to refresh the dynamic ip and reload the nginx reverse proxy.
+In my openhab server I've setup a cronjob that calls to yourdomain.com/api_ip/setip.php in order to refresh the dynamic ip and reload the nginx reverse proxy.
 
 Notes: It's recommended to install certbot (let's encrypt) in order to generate a valid SSL certificate. Don't use plain http
 
@@ -72,7 +72,7 @@ systemctl start home-ip.service
 
 In your openhab server set the following cronjob
 ```
-*/10 * * * * curl https://youruser:yourpassword@yourdomain/api/setip.php
+*/10 * * * * curl https://youruser:yourpassword@yourdomain/api_ip/setip.php
 ```
 
 ## Authors
