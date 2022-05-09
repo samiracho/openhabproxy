@@ -7,7 +7,7 @@ server {
 
     location / {
         proxy_pass http://${PROXY_SERVER}:${PROXY_PORT};
-        proxy_set_header Host ${PROXY_SERVER};
+        proxy_set_header Host $host;
 
 
         proxy_http_version 1.1;
